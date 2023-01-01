@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'controllers/provider.dart';
 import 'firebase_options.dart';
 import 'view/screen/login/login.dart';
+import 'view/screen/sign/sign-screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,  
       routes: {
         '/home': (context) => HomeScreen(),
+        '/login': (context) => LoginScreen(),
+        '/sign':(context) => SignScreen()
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

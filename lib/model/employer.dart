@@ -42,4 +42,21 @@ class EmployerLogin {
       scale: json['infor']['scale'],
     );
   }
+
+  factory EmployerLogin.fromJson1(Map<dynamic, dynamic> json) {
+    return EmployerLogin(
+      id: json['id'],
+      email: json['email'],
+      name: json['name'],
+      sdt: json['sdt'],
+      userName: json['userName'],
+      avatar: json['avatar'],
+      logo: json['logo'],
+      addRess: json['addRess'],
+      introduce: json['introduce'],
+      career: json['career'],
+      status: json['status'],
+      scale: json['scale'],
+    );
+  }
 }

@@ -48,6 +48,7 @@ dependencies:
   localstorage: ^4.0.0+1
   hive_flutter: ^1.1.0
   cached_network_image: any
+  easy_sidemenu: ^0.4.1
 
 dev_dependencies:
   flutter_test:

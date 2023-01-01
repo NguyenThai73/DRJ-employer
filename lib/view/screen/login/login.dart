@@ -23,8 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _emailController.text = "fpt";
-    _passwordController.text = "123";
+    _emailController.text = widget.email ?? "";
+    _passwordController.text = "";
   }
 
   @override
@@ -45,7 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage("assets/images/1.jpg"), fit: BoxFit.fill), color: Color.fromARGB(255, 54, 154, 236)),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/1.jpg"), fit: BoxFit.fill),
+              color: Color.fromARGB(255, 54, 154, 236)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -63,21 +65,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text('Đăng nhập'),
                       onPressed: () async {
                         processing();
-                        var requestBody = {"userName": _emailController.text, "password": _passwordController.text};
-                        var response = await httpPostLogin(requestBody, context);
+                        var requestBody = {
+                          "userName": _emailController.text,
+                          "password": _passwordController.text
+                        };
+                        var response =
+                            await httpPostLogin(requestBody, context);
                         var body = jsonDecode(response['body']);
                         if (body['success']) {
                           EmployerLogin emloyer = EmployerLogin.fromJson(body);
                           user.changeAuthorization(body['accessToken']);
                           user.changeUser(emloyer);
-                          // print(user.emloyer.logo);
-                          // Navigator.pushNamed(context, '/home', arguments: emloyer);
-                          Navigator.push<void>(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) => HomeScreen(),
-                            ),
-                          );
+                          LocalStorage().saveAuthorization(body['accessToken']);
+                          LocalStorage().saveId(emloyer.id.toString());
+                          // Navigator.pushAndRemoveUntil(context, newRoute, (route) => false)
+                          Navigator.pushNamed(context, "/home",
+                              arguments: HomeScreen());
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(body['message']),
@@ -99,12 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   TextButton(
                       onPressed: () {
-                        // Navigator.push<void>(
-                        //   context,
-                        //   MaterialPageRoute<void>(
-                        //     builder: (BuildContext context) => const SignScreen(),
-                        //   ),
-                        // );
+                        Navigator.pushNamed(context, "/sign");
                       },
                       child: Text("Đăng ký")),
                   const SizedBox(width: 30),
